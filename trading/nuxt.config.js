@@ -5,6 +5,11 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  publicRuntimeConfig: {
+    supabaseURL: process.env.SUPABASE_URL,
+    supabaseKey: process.env.SUPABASE_KEY
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'trading',
@@ -28,6 +33,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/supabase'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,7 +44,9 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    // https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
