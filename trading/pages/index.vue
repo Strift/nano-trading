@@ -19,35 +19,48 @@
         {{ $fetchState.error }}
       </div>
       <div v-else class="space-y-20">
-        <FutureMarket
-          v-if="nextMarket"
-          :id="nextMarket.id"
-          :value="marketInputValue(nextMarket)"
-          :name="marketName(nextMarket)"
-          :input-title="marketInputTitle(nextMarket)"
-          :activation-date="nextMarket.activation_date"
-          :selections="marketSelections(nextMarket)"
-          class="mx-auto shadow-md"
-          @enable="enableMarket(nextMarket)"
-          @input="updateMarketInputValue(nextMarket, $event)"
-        />
-        <div v-else class="my-20 text-4xl font-thin text-center text-gray">
-          Mela. No nano-markets waiting. 👌
-        </div>
+        <transition
+          enter-active-class="animate__animated animate__pulse"
+          mode="out-in"
+        >
+          <FutureMarket
+            v-if="nextMarket"
+            :id="nextMarket.id"
+            :value="marketInputValue(nextMarket)"
+            :name="marketName(nextMarket)"
+            :input-title="marketInputTitle(nextMarket)"
+            :activation-date="nextMarket.activation_date"
+            :selections="marketSelections(nextMarket)"
+            class="mx-auto shadow-md"
+            @enable="enableMarket(nextMarket)"
+            @input="updateMarketInputValue(nextMarket, $event)"
+          />
+          <div v-else class="my-20 text-4xl font-thin text-center text-gray">
+            Mela. No nano-markets waiting. 👌
+          </div>
+        </transition>
         <div class="text-lg font-semibold text-center text-gray-dark">
           Past markets
         </div>
-        <PastMarket
-          v-for="market in pastMarkets"
-          :id="market.id"
-          :key="market.id"
-          :value="marketInputValue(market)"
-          :name="marketName(market)"
-          :input-title="marketInputTitle(market)"
-          :selections="marketSelections(market)"
-          :enabled="market.enabled"
-          class="mx-auto shadow-md"
-        />
+        <transition-group
+          tag="div"
+          class="space-y-12"
+          enter-active-class="animate__animated animate__fadeInDown"
+          leave-active-class="animate__animated animate__fadeOut"
+          mode="out-in"
+        >
+          <PastMarket
+            v-for="market in pastMarkets"
+            :id="market.id"
+            :key="market.id"
+            :value="marketInputValue(market)"
+            :name="marketName(market)"
+            :input-title="marketInputTitle(market)"
+            :selections="marketSelections(market)"
+            :enabled="market.enabled"
+            class="mx-auto shadow-md"
+          />
+        </transition-group>
       </div>
     </div>
     <div class="text-center text-gray-dark">
