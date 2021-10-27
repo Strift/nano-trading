@@ -7,6 +7,7 @@
       <button class="px-3 py-1 text-xs font-semibold tracking-wider uppercase border rounded-md border-brand text-brand hover:bg-brand hover:text-white" @click="addMarket('baron_win')">
         🐼 Winner
       </button>
+      <input v-model.number="nextMarketDelayInSeconds" type="number" class="inline-flex h-6 px-3 border rounded w-14 border-gray text-gray-dark">
     </div>
     <h1 class="text-3xl font-semibold text-center text-brand">
       <span class="italic">Nano-</span>Trading Dashboard
@@ -75,7 +76,8 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   data: () => ({
-    refreshIntervalId: null
+    refreshIntervalId: null,
+    nextMarketDelayInSeconds: 5
   }),
   async fetch () {
     const { data, error } = await this.$supabase
@@ -174,7 +176,7 @@ export default {
           name,
           supremacy_enabled: name === 'baron_win',
           totals_enabled: name === 'baron_win',
-          activation_date: DateTime.now().plus({ seconds: 10 }).toJSON()
+          activation_date: DateTime.now().plus({ seconds: this.nextMarketDelayInSeconds }).toJSON()
         })
     }
   }
