@@ -21,6 +21,9 @@
         {{ $fetchState.error }}
       </div>
       <div v-else class="space-y-20">
+        <div v-if="futureMarkets.length > 1" class="text-center text-gray">
+          {{ futureMarkets.length-1 }} micro-markets waiting
+        </div>
         <transition
           enter-active-class="animate__animated animate__pulse"
           mode="out-in"
@@ -177,7 +180,8 @@ export default {
           name,
           supremacy_enabled: name === 'baron_win',
           totals_enabled: name === 'baron_win',
-          activation_date: DateTime.now().plus({ seconds: this.nextMarketDelayInSeconds }).toJSON()
+          activation_date: DateTime.now().plus({ seconds: this.nextMarketDelayInSeconds }).toJSON(),
+          duration: 30
         })
     }
   }
