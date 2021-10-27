@@ -7,7 +7,8 @@
       <button class="px-3 py-1 text-xs font-semibold tracking-wider uppercase border rounded-md border-brand text-brand hover:bg-brand hover:text-white" @click="addMarket('baron_win')">
         🐼 Winner
       </button>
-      <input v-model.number="nextMarketDelayInSeconds" type="number" class="inline-flex h-6 px-3 border rounded w-14 border-gray text-gray-dark">
+      <label for="delay" class="text-sm tracking-wider uppercase text-gray">Delay</label>
+      <input id="delay" v-model.number="nextMarketDelayInSeconds" type="number" class="inline-flex w-16 h-6 px-3 text-sm border rounded border-gray text-gray-dark">
     </div>
     <h1 class="text-3xl font-semibold text-center text-brand">
       <span class="italic">Nano-</span>Trading Dashboard
