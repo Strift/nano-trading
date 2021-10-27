@@ -12,5 +12,8 @@
         ]
       ]
     }
-  }
+  },
+  "plugins": [
+    "@znck/prop-types/remove"
+  ]
 }
