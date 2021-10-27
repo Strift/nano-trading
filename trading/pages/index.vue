@@ -1,5 +1,13 @@
 <template>
-  <div class="my-16 space-y-16">
+  <div class="relative my-16 space-y-16">
+    <div class="absolute top-0 left-0">
+      <button class="px-3 py-1 text-xs font-semibold tracking-wider uppercase border rounded-md border-brand text-brand hover:bg-brand hover:text-white" @click="addMarket('baron_tower')">
+        🐼 Towers
+      </button>
+      <button class="px-3 py-1 text-xs font-semibold tracking-wider uppercase border rounded-md border-brand text-brand hover:bg-brand hover:text-white" @click="addMarket('baron_win')">
+        🐼 Winner
+      </button>
+    </div>
     <h1 class="text-3xl font-semibold text-center text-brand">
       <span class="italic">Nano-</span>Trading Dashboard
     </h1>
@@ -49,6 +57,7 @@
 </template>
 
 <script>
+import { DateTime } from 'luxon'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -111,7 +120,7 @@ export default {
         .from('markets')
         .update(patch)
         .eq('id', market.id)
-      this.$store.commit('updateMarket', data[0])
+      // this.$store.commit('updateMarket', data[0])
     },
     marketInputTitle (market) {
       return market.supremacy_enabled
@@ -137,14 +146,23 @@ export default {
           ]
     },
     async enableMarket (market) {
-      console.log('Auto-enabling')
       const { data, error } = await this.$supabase
         .from('markets')
         .update({
           enabled: true
         })
         .eq('id', market.id)
-      this.$store.commit('updateMarket', data[0])
+      // this.$store.commit('updateMarket', data[0])
+    },
+    async addMarket (name) {
+      const { data, error } = await this.$supabase
+        .from('markets')
+        .insert({
+          name,
+          supremacy_enabled: name === 'baron_win',
+          totals_enabled: name === 'baron_win',
+          activation_date: DateTime.now().plus({ seconds: 10 }).toJSON()
+        })
     }
   }
 }
